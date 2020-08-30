@@ -32,7 +32,6 @@ namespace devboost.dronedelivery.felipe.Controllers
         }
       
         [HttpPost]
-        [Authorize(Roles.ROLE_API_DRONE)]
         public async Task<ActionResult<Drone>> PostDrone(Drone drone)
         {
             drone.Perfomance = (drone.Autonomia / 60.0f) * drone.Velocidade;

@@ -19,7 +19,7 @@ namespace devboost.dronedelivery.felipe.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public object Post([FromBody] User usuario, [FromServices] AccessManager accessManager)
+        public object Post([FromBody] Cliente usuario, [FromServices] AccessManager accessManager)
         {
             if (accessManager.ValidateCredentials(usuario))
             {

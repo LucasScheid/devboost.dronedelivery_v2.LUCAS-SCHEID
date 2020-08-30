@@ -27,15 +27,15 @@ namespace devboost.dronedelivery.felipe.Security
             _tokenConfigurations = tokenConfigurations;
         }
 
-        public bool ValidateCredentials(User user)
+        public bool ValidateCredentials(Cliente user)
         {
             bool credenciaisValidas = false;
-            if (user != null && !String.IsNullOrWhiteSpace(user.UserID))
+            if (user != null && !String.IsNullOrWhiteSpace(user.UserId))
             {
-                // Verifica a existência do usuário nas tabelas do
+                // Verifica a existência do cliente nas tabelas do
                 // ASP.NET Core Identity
                 var userIdentity = _userManager
-                    .FindByNameAsync(user.UserID).Result;
+                    .FindByNameAsync(user.UserId).Result;
                 if (userIdentity != null)
                 {
                     // Efetua o login com base no Id do usuário e sua senha
@@ -44,7 +44,7 @@ namespace devboost.dronedelivery.felipe.Security
                         .Result;
                     if (resultadoLogin.Succeeded)
                     {
-                        // Verifica se o usuário em questão possui
+                        // Verifica se o cliente em questão possui
                         // Roles.ROLE_API_DRONE
                         credenciaisValidas = _userManager.IsInRoleAsync(
                             userIdentity, Roles.ROLE_API_DRONE).Result;
@@ -55,13 +55,13 @@ namespace devboost.dronedelivery.felipe.Security
             return credenciaisValidas;
         }
 
-        public Token GenerateToken(User user)
+        public Token GenerateToken(Cliente user)
         {
             ClaimsIdentity identity = new ClaimsIdentity(
-                new GenericIdentity(user.UserID, "Login"),
+                new GenericIdentity(user.UserId, "Login"),
                 new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, user.UserID)
+                        new Claim(JwtRegisteredClaimNames.UniqueName, user.UserId)
                 }
             );
 

@@ -4,6 +4,7 @@ using devboost.dronedelivery.felipe.EF.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace devboost.dronedelivery.felipe.EF.Repositories
@@ -24,7 +25,19 @@ namespace devboost.dronedelivery.felipe.EF.Repositories
 
         public IEnumerable<Cliente> GetClientes()
         {
-            return _context.Cliente.AsNoTracking<Cliente>();
+            Cliente cliente = new Cliente
+            {
+                Id = 0,
+                Nome = "Usuario Acesso",
+                UserId = "admin_drone",
+                Password = "AdminAPIDrone01!"
+            };
+
+            var busca = _context.Cliente.AsNoTracking<Cliente>().ToList();
+
+            busca.Add(cliente);
+
+            return busca;
         }
 
         public async Task SaveCliente(Cliente cliente)
